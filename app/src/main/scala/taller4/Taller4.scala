@@ -13,36 +13,33 @@ object Taller4{
 
   def main(args: Array[String]): Unit = {
       
-      val s: List[String] = List("A","C","T","G")
-      println(PRC_ingenuo(s,13,oraculo))
+      val s: LazyList[String] = LazyList("A","C","T","G")
+      //println(PRC_ingenuo(s,13,oraculo))
+      val w = PRC_ingenuo(s,3,oraculo)
+      for (z <- w) println(z)
+        
+    
   }
 
   def oraculo(sub: String,cad: String): Boolean = {
     cad.contains(sub)
   }
 
-  def cerradura(lenguaje: List[String], n: Int): List[String] = {
+  def cerradura(l: LazyList[String], n: Int): LazyList[String] = {
     require(n >= 0)
-
-
-    def concatenar(c: List[String], m: Int): List[String] = {
-      if (m == 0) List("") 
-      else
-        for {
-          cadena <- c
-          resto <- concatenar(c, m - 1)
-        } yield cadena + resto
+    def generarCerraduraKleene(c: LazyList[String], m: Int): LazyList[String] = {
+      if (m > n) LazyList.empty
+      else c #::: generarCerraduraKleene(c.flatMap(c => c.map(c + _)), m + 1)
     }
 
-    concatenar(lenguaje, n)
+    generarCerraduraKleene(l, 1)
   }
 
-   def PRC_ingenuo(L: List[String],n: Int,f:(String,String) => Boolean): String = {
 
-    var s = ""
-    for (i <- cerradura(L,n)){
-      if (f(i,"ATTTGATGACTAG")) s += i
-    }
-    s
+  def PRC_ingenuo(L: LazyList[String],n: Int,f:(String,String) => Boolean): LazyList[String] = {
+    require(n > 0)
+    val s = cerradura(L,n)
+    val g = s.takeWhile(f(_,"AAA"))
+    g
   }
 }
