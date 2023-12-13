@@ -6,8 +6,8 @@ class oraculo(tam: Int){
   def EsSubcadena(sub: String): Boolean = {
     S.contains(sub)
   }
-  def EsLaCadena(cad: String): String = {
-    if (S == cad) S else ""
+  def EsLaCadena(cad: String): Boolean = {
+    S == cad
   }
   def getTamaño(): Int = {
     n  
