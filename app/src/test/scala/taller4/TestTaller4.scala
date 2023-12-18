@@ -12,7 +12,32 @@ import org.scalatestplus.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
 class TestTaller4 extends AnyFunSuite{
-    test("testTaller4"){
-        assert("Taller 4 2023-II" == Taller4.saludo())
+  val soluciones = new soluciones()
+  val tam = Math.pow(2,3).toInt
+  val oraculo = new oraculo(tam)
+  val s = List("A","C","G","T")
+    test("Test ingenua"){
+        assert(oraculo.EsLaCadena(soluciones.PRC_ingenuo(s, tam, oraculo)))
+    }
+    test("Test ingenua paralela"){
+      assert(oraculo.EsLaCadena(soluciones.PRC_ingenuoParalelo(s, tam, oraculo)))
+    }
+    test("Test mejorada"){
+      assert(oraculo.EsLaCadena(soluciones.PRC_mejorado(s, tam, oraculo).head))
+    }
+    test("Test mejorada paralela"){
+      assert(oraculo.EsLaCadena(soluciones.PRC_mejoradoParalelo(s, tam, oraculo).head))
+    }
+    test("Test turbo solucion"){
+      assert(oraculo.EsLaCadena(soluciones.PRC_TurboSolucion(s, tam, oraculo).head))
+    }
+    test("Test turbo solucion paralela"){
+      assert(oraculo.EsLaCadena(soluciones.PRC_TurboSolucionParalelo(s, tam, oraculo).head))
+    }
+    test("Test turbomejorado"){
+      assert(oraculo.EsLaCadena(soluciones.PRC_Turbomejorado(s, tam, oraculo).head))
+    }
+    test("Test turbomejorado paralelo"){
+      assert(oraculo.EsLaCadena(soluciones.PRC_TurbomejoradoParalelo(s, tam, oraculo).head))
     }
 }
